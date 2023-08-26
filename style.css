@@ -1,0 +1,10 @@
+.board-contianer {
+    display: flex;
+    justify-content: space-evenly;
+}
+.board {
+    width: 20rem;
+    height: 30rem;
+    background-color: antiquewhite;
+    display: inline-block;
+}
