@@ -11,6 +11,12 @@
 }
 .board-title {
     width: 100%;
-    height: 20%;
+    height: 10%;
     background-color: beige;
+    text-align: center;
+    display: table;
+}
+.board-title-span {
+    vertical-align: middle;
+    display: table-cell;
 }
