@@ -1,22 +1,27 @@
 .board-contianer {
     display: flex;
     justify-content: space-evenly;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 .board {
     width: 20rem;
     height: 30rem;
     background-color: antiquewhite;
+    margin: 0 1rem;
     display: inline-block;
 }
-.board-title {
+.board-title, .board-body {
     width: 100%;
     height: 10%;
     background-color: beige;
     text-align: center;
+    flex-shrink: 1;
     display: table;
 }
-.board-title-span {
+.board-title-span, .board-body-span {
     vertical-align: middle;
     display: table-cell;
+}
+.board-body-span {
+    border: solid 0.1rem;
 }
