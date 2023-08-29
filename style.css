@@ -7,7 +7,7 @@
     width: 20rem;
     height: 30rem;
     background-color: antiquewhite;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     display: inline-block;
 }
 .board-title, .board-body {
