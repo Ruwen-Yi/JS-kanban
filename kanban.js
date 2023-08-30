@@ -1,13 +1,14 @@
 
 document.addEventListener('click', handleClick);
 
-let taskTarget;
+let taskTarget = null;
 let oldContent = '';
 function handleClick(event) {
 
     if (event.target.closest('.board-body-task-add-btn')){
         if (taskTarget) return;
-        addTask(event.target);
+        
+        addTask(event.target.closest('.board-body-task-add-btn'));
         return;
     }
     
