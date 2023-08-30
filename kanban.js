@@ -6,7 +6,7 @@ let oldContent = null;
 function handleClick(event) {
     
     if (event.target.classList.contains('board-body-task')){
-        showBtn();
+        showBtn(event.target);
 
         if (!oldContent) oldContent = event.target.innerHTML;
         taskTarget = editTask(event.target);
@@ -52,9 +52,9 @@ function cancelEdit(taskTarget, oldContent) {
     return;
 }
 
-function showBtn() {
+function showBtn(taskTarget) {
     let btn = document.getElementsByClassName('board-body-task-btns')[0];
-
+    taskTarget.after(btn);
     btn.hidden = false;
 
     return;
