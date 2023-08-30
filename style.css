@@ -22,12 +22,32 @@
     vertical-align: middle;
     display: table-cell;
 }
+
 .board-body-task {
     width: 100%;
     height: 3rem;
-    padding: 0.5rem;
-    box-sizing: border-box;
     border: solid 0.1rem;
+    box-sizing: border-box;
+    position: relative;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.board-body-task-content {
+    width: 100%;
+    height: auto;
+    padding: 0.5rem 0;
+    box-sizing: border-box;
+    display: inline-block;
+}
+.board-body-task-content:focus {
+    outline: none;
+}
+
+.board-body-task-to-left, .board-body-task-to-right {
+    padding: 0.5rem;
 }
 .board-body-task-add-btn {
     width: 100%;

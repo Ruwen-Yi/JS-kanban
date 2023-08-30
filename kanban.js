@@ -3,29 +3,34 @@ document.addEventListener('click', handleClick);
 
 let taskTarget;
 let oldContent = '';
-let isEditing;
 function handleClick(event) {
 
-    if (event.target.classList.contains('board-body-task-add-btn')){
+    if (event.target.closest('.board-body-task-add-btn')){
+        if (taskTarget) return;
         addTask(event.target);
         return;
     }
     
-    if (event.target.classList.contains('board-body-task')){
-        if (isEditing) return;
-                
-        if (!oldContent) oldContent = event.target.innerHTML;
-        taskTarget = editTask(event.target);
+    if (event.target.classList.contains('board-body-task-content')){
 
-        showBtn(event.target);
+        // console.log(taskTarget);
+        if (taskTarget && taskTarget != event.target) return;
+
+        if (!oldContent) oldContent = event.target.innerHTML;
+
+        editTask(event.target);
+        showBtn(event.target.closest('.board-body-task'));
+
+        taskTarget = event.target;
         
         return;
     }
 
     if (event.target.classList.contains('board-save-btn')){
-        saveEdit(taskTarget);
+        saveEdit();
         removeBtn();
 
+        taskTarget = null;
         return;
     }
 
@@ -33,6 +38,7 @@ function handleClick(event) {
         cancelEdit(taskTarget, oldContent);
         removeBtn();
         
+        taskTarget = null;
         return;
     }
 
@@ -41,37 +47,29 @@ function handleClick(event) {
 function addTask(target) {
     let div = document.createElement('div');
     div.classList.add('board-body-task');
-    div.setAttribute('contenteditable','true');
 
-    let span = document.createElement('span');
-    span.classList.add('board-body-task-content');
-    span.textContent = 'Task';
-    
-    div.append(span);
+    div.innerHTML = `
+        <div class="board-body-task-to-left">&lt;</div>
+        <span class="board-body-task-content" contenteditable="true">Task</span>
+        <div class="board-body-task-to-right">&gt;</div>
+        `
+                    
     target.before(div);
 }
 
 function editTask(taskTarget) {
-    isEditing = true;
     taskTarget.onblur = taskTarget.focus;
-    
-    return taskTarget;
 }
 
-function saveEdit(taskTarget) {
-    isEditing = false;
-
+function saveEdit() {
     taskTarget.onblur = '';
     taskTarget.blur();
 
     oldContent = '';
-
     return;
 }
 
 function cancelEdit(taskTarget, oldContent) {
-    isEditing = false;
-    
     taskTarget.onblur = '';
     taskTarget.blur();
 
@@ -80,9 +78,9 @@ function cancelEdit(taskTarget, oldContent) {
     return;
 }
 
-function showBtn(taskTarget) {
+function showBtn(taskCard) {
     let btn = document.getElementsByClassName('board-body-task-btns')[0];
-    taskTarget.after(btn);
+    taskCard.after(btn);
     btn.hidden = false;
 
     return;
