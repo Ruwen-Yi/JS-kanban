@@ -3,6 +3,8 @@
     justify-content: space-evenly;
     flex-wrap: nowrap;
 }
+
+/* | task boards | */
 .board {
     width: 20rem;
     height: 30rem;
@@ -23,6 +25,7 @@
     display: table-cell;
 }
 
+/* | task cards | */
 .board-body-task {
     width: 100%;
     height: 3rem;
@@ -34,7 +37,7 @@
     justify-content: space-between;
     align-items: center;
 }
-
+/* task cards: task content */
 .board-body-task-content {
     width: 100%;
     height: auto;
@@ -46,9 +49,15 @@
     outline: none;
 }
 
+/* task cards: arrow to left/right */
 .board-body-task-to-left, .board-body-task-to-right {
     padding: 0.5rem;
 }
+.board-body-task-to-left:hover, .board-body-task-to-right:hover {
+    cursor: pointer;
+}
+
+/* | add-task button | */
 .board-body-task-add-btn {
     width: 100%;
     height: 4rem;
