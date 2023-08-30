@@ -1,24 +1,69 @@
-let isBtnClicked = false;
-document.addEventListener('click', (e)=>{
+
+document.addEventListener('click', handleClick);
+
+let taskTarget;
+let oldContent = null;
+function handleClick(event) {
     
-    if (!e.target.classList.contains('board-body-task')){
+    if (event.target.classList.contains('board-body-task')){
+        showBtn();
+
+        if (!oldContent) oldContent = event.target.innerHTML;
+        taskTarget = editTask(event.target);
+        
         return;
     }
 
-    e.target.onblur = ()=>{
+    if (event.target.classList.contains('board-save-btn')){
+        saveEdit(taskTarget);
+        removeBtn();
 
-        if(isBtnClicked) {
-            e.target.onblur = '';
-            e.target.blur();
-            return;
-        }
-        
-        e.target.focus();
+        return;
     }
-})
 
-let saveBtn = document.getElementsByClassName('board-save-btn')[0];
+    if (event.target.classList.contains('board-cancel-btn')){
+        cancelEdit(taskTarget, oldContent);
+        removeBtn();
+        
+        return;
+    }
 
-saveBtn.onclick = ()=>{
-    isBtnClicked = true;
+}
+
+function editTask(taskTarget) {
+    taskTarget.onblur = taskTarget.focus;
+    
+    return taskTarget;
+}
+
+function saveEdit(taskTarget) {
+    taskTarget.onblur = '';
+    taskTarget.blur();
+
+    return;
+}
+
+function cancelEdit(taskTarget, oldContent) {
+    taskTarget.onblur = '';
+    taskTarget.blur();
+
+    taskTarget.innerHTML = oldContent;
+
+    return;
+}
+
+function showBtn() {
+    let btn = document.getElementsByClassName('board-body-task-btns')[0];
+
+    btn.hidden = false;
+
+    return;
+}
+
+function removeBtn() {
+    let btn = document.getElementsByClassName('board-body-task-btns')[0];
+
+    btn.hidden = true;
+
+    return;
 }
