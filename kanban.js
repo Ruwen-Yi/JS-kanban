@@ -1,6 +1,7 @@
 
 document.addEventListener('click', handleClick);
 
+let templateTextArea = document.getElementById('template-text-area');
 let taskTarget = null;
 let oldContent = '';
 function handleClick(event) {
@@ -38,7 +39,7 @@ function handleClick(event) {
     }
 
     if (event.target.classList.contains('board-cancel-btn')){
-        cancelEdit(taskTarget, oldContent);
+        cancelEdit();
         removeBtn();
         
         taskTarget = null;
@@ -58,7 +59,7 @@ function addTask(target) {
 
     div.innerHTML = `
         <div class="board-body-task-to-left">&lt;</div>
-        <span class="board-body-task-content" contenteditable="true">Task</span>
+        <span class="board-body-task-content">Task</span>
         <div class="board-body-task-to-right">&gt;</div>
         `
                     
@@ -71,6 +72,12 @@ function addTask(target) {
  * @param {HTMLSpanElement} taskTarget 
  */
 function editTask(taskTarget) {
+    let textArea = templateTextArea.content.cloneNode(true);
+    textArea.firstElementChild.value = oldContent;
+
+    taskTarget.innerHTML = '';
+    taskTarget.append(textArea);
+
     taskTarget.onblur = taskTarget.focus;
     return;
 }
@@ -85,6 +92,7 @@ function saveEdit() {
     taskTarget.onblur = '';
     taskTarget.blur();
 
+    taskTarget.innerHTML = taskTarget.firstElementChild.value;
     oldContent = '';
     return;
 }
@@ -95,11 +103,12 @@ function saveEdit() {
  * @param {string} oldContent the original task content before editing.
  * @returns 
  */
-function cancelEdit(taskTarget, oldContent) {
+function cancelEdit() {
     taskTarget.onblur = '';
     taskTarget.blur();
 
     taskTarget.innerHTML = oldContent;
+    oldContent = '';
 
     return;
 }
@@ -119,7 +128,6 @@ function showBtn(taskCard) {
 
 /**
  * this function removes the save/cancel buttons under the task card.
- * @param {HTMLSpanElement} taskCard the whole task card whose task content finish editing.
  */
 function removeBtn() {
     let btn = document.getElementsByClassName('board-body-task-btns')[0];
