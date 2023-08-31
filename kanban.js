@@ -1,5 +1,5 @@
 
-document.addEventListener('click', handleClick);
+document.addEventListener('click', handleClick, {passive: true});
 
 let templateTextArea = document.getElementById('template-text-area');
 let taskTarget = null;
@@ -136,4 +136,66 @@ function removeBtn() {
     btn.hidden = true;
 
     return;
+}
+
+/**
+ * handle the event when user click the toLeft/Right Arrow
+ */
+document.addEventListener('click', handleArrowClick, {passive: true});
+
+/**
+ * 
+ * @param {MouseEvent} event a click event
+ */
+function handleArrowClick(event){
+    if (event.target.classList.contains('board-body-task-to-left')){
+        handleLeftArrow(event.target.closest('.board-body-task'));
+    }
+    else if (event.target.classList.contains('board-body-task-to-right')){
+        handleRightArrow(event.target.closest('.board-body-task'));
+    }
+}
+
+/**
+ * 
+ * @param {HTMLSpanElement} taskCard the taskCard whose toLeft arrow is clicked
+ */
+function handleLeftArrow(taskCard) {
+    let board = taskCard.closest('.board');
+    let boardName = board.classList.item(1);
+
+    let targetBoard = document.getElementsByClassName(`${leftBoard[boardName]}`)[0];
+    
+    let targetBoardTitle = targetBoard.getElementsByClassName('board-title')[0];
+
+    targetBoardTitle.after(taskCard);
+}
+
+/**
+ * 
+ * @param {HTMLSpanElement} taskCard the taskCard whose toRight arrow is clicked
+ */
+function handleRightArrow(taskCard) {
+    let board = taskCard.closest('.board');
+    let boardName = board.classList.item(1);
+
+    let targetBoard = document.getElementsByClassName(`${rightBoard[boardName]}`)[0];
+    
+    let targetBoardTitle = targetBoard.getElementsByClassName('board-title')[0];
+
+    targetBoardTitle.after(taskCard);
+}
+
+let rightBoard = {
+    'board-to-do': 'board-doing',
+    'board-doing': 'board-done',
+    'board-done': 'board-approved',
+    'board-approved':'board-to-do'
+}
+
+let leftBoard = {
+    'board-to-do':'board-approved',
+    'board-doing':'board-to-do',
+    'board-done':'board-doing',
+    'board-approved':'board-done'
 }
