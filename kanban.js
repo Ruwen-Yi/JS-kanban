@@ -80,6 +80,9 @@ function editTask(taskTarget) {
     taskTarget.innerHTML = '';
     taskTarget.append(textArea);
 
+    // to improve ux, focus on textarea.
+    textArea.focus();
+
     taskTarget.onblur = taskTarget.focus;
     return;
 }
