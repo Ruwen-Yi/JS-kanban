@@ -72,9 +72,11 @@ function addTask(target) {
  * @param {HTMLSpanElement} taskTarget 
  */
 function editTask(taskTarget) {
-    let textArea = templateTextArea.content.cloneNode(true);
-    textArea.firstElementChild.value = oldContent;
+    // get <textare> from template and populate it with task content.
+    let textArea = templateTextArea.content.cloneNode(true).firstElementChild;
+    textArea.value = oldContent;
 
+    // append the <textare> node into the taskCard
     taskTarget.innerHTML = '';
     taskTarget.append(textArea);
 
